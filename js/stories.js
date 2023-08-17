@@ -60,28 +60,12 @@ async function getFormDataAndDisplayStory() {
   const author = $("#author-input").val();
   const title = $("#title-input").val();
   const url = $("#url-input").val();
-  //TODO: update StoryList.stories instance property? (which I guess would `storyList`?)
-  //TODO: call generate story to get markup, then store that and APPEND that to DOM
-  console.log(`author`, author);
-  console.log(`title`, title);
-  console.log(`url`, url);
-  console.log(`current user`, currentUser);
-
-
 
   const newStory = await storyList.addStory(currentUser, { author, title, url });
 
-  // console.log(`newStory in getFormData...:`, newStory);
-  // console.log(`storyList:`, storyList);
-
-  // storyList.stories.unshift(newStory);
-
   const $storyMarkup = generateStoryMarkup(newStory);
 
-  console.log($allStoriesList);
-  // console.log('THIS IS THE NEW MARKUP', $storyMarkup);
-  $allStoriesList.append($storyMarkup);
-  // console.log('JUST RAN APPEND TO DOM WITH THE MARKUP');
+  $allStoriesList.prepend($storyMarkup);
 }
 
 $("#new-story-form").on("submit", function (evt) {

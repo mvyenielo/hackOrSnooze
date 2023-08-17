@@ -90,7 +90,7 @@ class StoryList {
 
     const newStoryInstance = new Story(story)
 
-    storyList.stories.unshift(newStoryInstance);
+    this.stories.unshift(newStoryInstance);
 
     return newStoryInstance;
   }
@@ -217,5 +217,39 @@ class User {
       console.error("loginViaStoredCredentials failed", err);
       return null;
     }
+  }
+
+  async addFavorite(story) {
+    const response = await fetch(
+      `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+      {
+        method: "POST",
+        body: JSON.stringify({
+          token: this.loginToken,
+        }),
+        header: {
+          "content-type": "application/json"
+        }
+      }
+    )
+    const favoriteAdded = await response.json();
+    return favoriteAdded;
+  }
+
+  async removeFavorite(story) {
+    const response = await fetch(
+      `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
+      {
+        method: "DELETE",
+        body: JSON.stringify({
+          token: this.loginToken,
+        }),
+        header: {
+          "content-type": "application/json"
+        }
+      }
+    )
+    const favoriteDeleted = await response.json();
+    return favoriteDeleted;
   }
 }
