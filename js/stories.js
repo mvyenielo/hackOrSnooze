@@ -20,11 +20,12 @@ async function getAndShowStoriesOnStart() {
  */
 
 function generateStoryMarkup(story) {
-  console.debug("generateStoryMarkup", story);
+  // console.debug("generateStoryMarkup", story);
 
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
+      <i class="star bi bi-star"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -73,4 +74,23 @@ $("#new-story-form").on("submit", function (evt) {
   getFormDataAndDisplayStory();
 
   $("#new-story-submit").trigger("reset");
+});
+
+
+
+
+// FAV STAR EVENT LISTENER!
+
+$("#all-stories-list").on("click", ".star", function (evt) {
+  $(evt.target).toggleClass("bi-star bi-star-fill");
+
+  const storyId = $(evt.target).parent().attr("id");
+
+  const clickedStory = Story.getStoryById(storyId);
+
+  $(evt.target).hasClass("bi-star") ? currentUser.removeFavorite(clickedStory)
+    : currentUser.addFavorite(clickedStory);
+
+  saveFavoritesInLocalStorage();
+
 });

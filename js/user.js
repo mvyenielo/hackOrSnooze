@@ -96,6 +96,16 @@ function saveUserCredentialsInLocalStorage() {
   }
 }
 
+function saveFavoritesInLocalStorage() {
+  
+}
+
+
+
+
+
+
+
 /******************************************************************************
  * General UI stuff about users
  */

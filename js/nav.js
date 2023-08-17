@@ -44,4 +44,11 @@ function navSubmitClick(evt) {
   $("#new-story-form").toggle();
 }
 
+function navFavoritesClick(evt) {
+  evt.preventDefault();
+  $("#all-stories-list").toggle();
+}
+
+
 $("#nav-new-story").on("click", navSubmitClick);
+$("#nav-favorites").on("click", navFavoritesClick);

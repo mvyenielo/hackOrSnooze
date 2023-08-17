@@ -24,12 +24,16 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    console.log(`this in getHostName `, this);
-    console.log(`this url in getHostName`, this.url);
-
     const url = new URL(this.url);
     return url.hostname;
   }
+
+
+  static getStoryById(storyId) {
+    const [clickedStory] = storyList.stories.filter(story => story.storyId === storyId);
+    return clickedStory;
+  }
+
 }
 
 
@@ -220,6 +224,8 @@ class User {
   }
 
   async addFavorite(story) {
+    this.favorites.push(story);
+
     const response = await fetch(
       `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
       {
@@ -228,7 +234,7 @@ class User {
           token: this.loginToken,
         }),
         header: {
-          "content-type": "application/json"
+          "Content-Type": "application/json"
         }
       }
     )
@@ -237,6 +243,13 @@ class User {
   }
 
   async removeFavorite(story) {
+    for (let i = 0; i < this.favorites.length; i++) {
+      if (this.favorites[i].storyId === story.storyId) {
+        this.favorites.splice(i, 1);
+        break;
+      }
+    }
+
     const response = await fetch(
       `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
       {
@@ -245,10 +258,11 @@ class User {
           token: this.loginToken,
         }),
         header: {
-          "content-type": "application/json"
+          "Content-Type": "application/json"
         }
       }
     )
+
     const favoriteDeleted = await response.json();
     return favoriteDeleted;
   }
