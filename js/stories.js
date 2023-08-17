@@ -71,4 +71,9 @@ async function getFormDataAndDisplayStory() {
 $("#new-story-submit").on("click", function (evt) {
   evt.preventDefault();
   getFormDataAndDisplayStory();
+
+  $("#new-story-form").hide();
+  $("#author-input").val('');
+  $("#title-input").val('');
+  $("#url-input").val('');
 });
