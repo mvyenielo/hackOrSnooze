@@ -73,8 +73,19 @@ class StoryList {
    * Returns the new Story instance
    */
 
-  async addStory( /* user, newStory */) {
-    // UNIMPLEMENTED: complete this function!
+  async addStory(user, { author, title, url }) {
+    const response = await fetch(`${BASE_URL}/stories`, {
+      method: "POST",
+      body: JSON.stringify({
+        token: user.loginToken,
+        story: { author, title, url }
+      }),
+      headers: { "Content-Type": "application/json" }
+    });
+
+    const storyData = response.json();
+
+    return new Story(storyData);
   }
 }
 
