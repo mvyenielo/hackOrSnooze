@@ -51,11 +51,24 @@ function putStoriesOnPage() {
   $allStoriesList.show();
 }
 
-function getFormDataAndDisplayStory() {
-  const authorInput = $("#author-input").val();
-  const titleInput = $("#title-input").val();
-  const urlInput = $("#url-input").val();
-  storyList.addStory(currentUser, {authorInput, titleInput, urlInput})
+/** getFormDataAndDisplayStory: Get input values from new story form, update API
+ *  with new story, and display new story to DOM
+ *
+ */
+
+async function getFormDataAndDisplayStory() {
+  const author = $("#author-input").val();
+  const title = $("#title-input").val();
+  const url = $("#url-input").val();
+
+  await storyList.addStory(currentUser, { author, title, url });
+  storyList = await StoryList.getStories();
+
+  putStoriesOnPage();
 }
 
 
+$("#new-story-submit").on("click", function (evt) {
+  evt.preventDefault();
+  getFormDataAndDisplayStory();
+});

@@ -37,6 +37,8 @@ function updateNavOnLogin() {
   $navUserProfile.text(`${currentUser.username}`).show();
 }
 
+/** navSubmitClick: When user clicks submit nav button, reveal new story form */
+
 function navSubmitClick(evt) {
   evt.preventDefault();
   $("#new-story-form").show();
