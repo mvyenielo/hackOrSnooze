@@ -50,3 +50,12 @@ function putStoriesOnPage() {
 
   $allStoriesList.show();
 }
+
+function getFormDataAndDisplayStory() {
+  const authorInput = $("#author-input").val();
+  const titleInput = $("#title-input").val();
+  const urlInput = $("#url-input").val();
+  storyList.addStory(currentUser, {authorInput, titleInput, urlInput})
+}
+
+
