@@ -22,7 +22,7 @@ async function getAndShowStoriesOnStart() {
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
 
-  const hostName = story.getHostName();
+  const hostName = story.getHostName(story.url);
   return $(`
       <li id="${story.storyId}">
         <a href="${story.url}" target="a_blank" class="story-link">
@@ -60,20 +60,17 @@ async function getFormDataAndDisplayStory() {
   const author = $("#author-input").val();
   const title = $("#title-input").val();
   const url = $("#url-input").val();
+//TODO: update StoryList.stories instance property? (which I guess would `storyList`?)
+//TODO: call generate story to get markup, then store that and APPEND that to DOM
+  const newStory = await storyList.addStory(currentUser, { author, title, url });
+  // storyList = await StoryList.getStories();
 
-  await storyList.addStory(currentUser, { author, title, url });
-  storyList = await StoryList.getStories();
-
-  putStoriesOnPage();
+  // putStoriesOnPage();
 }
 
-
-$("#new-story-submit").on("click", function (evt) {
+$("#new-story-submit").on("submit", function (evt) {
   evt.preventDefault();
   getFormDataAndDisplayStory();
 
-  $("#new-story-form").hide();
-  $("#author-input").val('');
-  $("#title-input").val('');
-  $("#url-input").val('');
+  $("#new-story-submit").trigger("reset");
 });

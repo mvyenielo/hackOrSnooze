@@ -41,7 +41,7 @@ function updateNavOnLogin() {
 
 function navSubmitClick(evt) {
   evt.preventDefault();
-  $("#new-story-form").show();
+  $("#new-story-form").toggle();
 }
 
 $("#nav-new-story").on("click", navSubmitClick);
