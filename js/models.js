@@ -23,8 +23,11 @@ class Story {
 
   /** Parses hostname out of URL and returns it. */
 
-  getHostName(storyUrl) {
-    const url = new URL(storyUrl);
+  getHostName() {
+    console.log(`this in getHostName `,this);
+    console.log(`this url in getHostName`, this.url);
+
+    const url = new URL(this.url);
     return url.hostname;
   }
 }
