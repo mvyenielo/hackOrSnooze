@@ -24,7 +24,7 @@ class Story {
   /** Parses hostname out of URL and returns it. */
 
   getHostName() {
-    console.log(`this in getHostName `,this);
+    console.log(`this in getHostName `, this);
     console.log(`this url in getHostName`, this.url);
 
     const url = new URL(this.url);
@@ -86,9 +86,13 @@ class StoryList {
       headers: { "Content-Type": "application/json" }
     });
 
-    const storyData = response.json();
+    const {story} = await response.json();
 
-    return new Story(storyData);
+    const newStoryInstance = new Story(story)
+
+    storyList.stories.unshift(newStoryInstance);
+
+    return newStoryInstance;
   }
 }
 
