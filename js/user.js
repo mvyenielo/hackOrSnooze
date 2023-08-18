@@ -58,6 +58,7 @@ $signupForm.on("submit", signup);
 
 function logout(evt) {
   console.debug("logout", evt);
+  $(".star").hide();
   localStorage.clear();
   location.reload();
 }
@@ -97,7 +98,7 @@ function saveUserCredentialsInLocalStorage() {
 }
 
 function saveFavoritesInLocalStorage() {
-  
+
 }
 
 
@@ -119,7 +120,7 @@ function saveFavoritesInLocalStorage() {
 
 function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
-
+  $(".star").show();
   $allStoriesList.show();
 
   updateNavOnLogin();
