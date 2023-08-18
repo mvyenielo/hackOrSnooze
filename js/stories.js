@@ -93,14 +93,21 @@ function putUserFavoritesOnPage() {
 
 
 
+/** displayFavorite: takes in a story instance, creates markup, and appends
+ * to the LIST OF FAVORITES
+ */
 
 function displayFavorite(story) {
   const $favoriteMarkup = generateStoryMarkup(story);
   $(".list-of-favorites").append($favoriteMarkup);
 }
 
-function removeFavorite(story) {
-  $(".list-of-favorites").remove(`#${story.storyId}`);
+/** removeFavorites: takes in a story instance, and REMOVES the specific story with
+ * the storyId from the LIST OF FAVORITES
+ */
+
+function removeFavoriteFromUI(story) {
+  $(".list-of-favorites").find(`#${story.storyId}`).remove();
 }
 
 
@@ -128,24 +135,22 @@ $(".stories-container").on("click", ".star", async function (evt) {
   $(evt.target).toggleClass("bi-star bi-star-fill");
 
   const storyId = $(evt.target).parent().attr("id");
-  console.log(storyId);
-  const clickedStory = Story.getStoryById(storyId);
 
+  const clickedStory = Story.getStoryById(storyId);
+  console.log("storyId is", storyId);
   let userObj;
 
   if ($(evt.target).hasClass("bi-star")) {
     userObj = await currentUser.removeFavorite(clickedStory);
-    removeFavorite(clickedStory);
+    removeFavoriteFromUI(clickedStory);
   } else {
     userObj = await currentUser.addFavorite(clickedStory);
-
-    if (!$(evt.target).closest("div").hasClass("favorites-list")) {
-      displayFavorite(clickedStory);
-    }
+    displayFavorite(clickedStory);
   }
+  //   // if you spam click a story IN the fav tab, it keeps re-adding it
+    // if (!$(evt.target).closest("div").hasClass("favorites-list")) {
+    // }
 
 
-  console.log(userObj);
-
-
+  // console.log(userObj);
 });

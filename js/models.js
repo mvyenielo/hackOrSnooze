@@ -28,10 +28,17 @@ class Story {
     return url.hostname;
   }
 
+  /** getStoryById: loops over the global storyList.stories array and finds the
+   * story instance object with that particular storyId in a array
+   */
 
   static getStoryById(storyId) {
+    //but doesnt work if the storyList gets updated to not include the old story
+    //anymore, so how do we check for the old one?
     const [clickedStory] = storyList.stories.filter(story => story.storyId === storyId);
     return clickedStory;
+
+    const clickedStory2 = currentUser.favorites.filter(story => story.storyId === storyId)
   }
 
 }
@@ -223,8 +230,11 @@ class User {
     }
   }
 
-  async addFavorite(story) {
+  /** addFavorite: takes in a story instance, pushes to user instance favorites
+   * array prop, calls API to POST the new fav story. returns user object
+   */
 
+  async addFavorite(story) {
     this.favorites.push(story);
 
     const response = await fetch(

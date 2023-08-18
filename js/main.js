@@ -58,8 +58,14 @@ $(start);
 
 
 
-//TODO: append favorites to favorite section
-//TODO: stars and fav stories persistent on refresh and logging in and out
+
+//TODO: stars persistent ON THE MAIN PAGE on refresh and logging in/out
 //TODO: figure out removing fav stories from DOM in fav section
 //TODO: read the hint about older stories
 
+
+
+// QUESTIONS TO ASK: //
+// Do we need to adjust the static method to also check the currentUser.favorites array?!!!!!!!
+// Do we need to use LS to keep track of favorites?
+// Do you not want us to immedietaly remove a favorited story from the favorite list?
