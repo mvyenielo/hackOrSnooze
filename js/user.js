@@ -118,10 +118,11 @@ function saveFavoritesInLocalStorage() {
  * - generate the user profile part of the page
  */
 
+//TODO: Confirm that putting user favorites on page should happen here
 function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
   $(".star").show();
   $allStoriesList.show();
-
+  putUserFavoritesOnPage();
   updateNavOnLogin();
 }

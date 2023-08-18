@@ -77,11 +77,34 @@ $("#new-story-form").on("submit", function (evt) {
 });
 
 
+// TODO: fix if statement/get rid of
+function putUserFavoritesOnPage() {
+  const currentUserFavorites = currentUser.favorites;
+  if (currentUserFavorites === 0) {
+    return;
+  }
+
+  for (let favorite of currentUserFavorites) {
+    const $favoriteMarkup = generateStoryMarkup(favorite);
+    $(".list-of-favorites").append($favoriteMarkup);
+  }
+}
 
 
 async function updateFavorite() {
 
+// need to check if story is already favorited, add if not
+// - shouldn't be able to add a story to favorites if it's already favorited
+// add and remove stories from display on favorites page
+// make sure the "No favorites yet" message shows when the favorites is empty/
+// becomes empty
+
+
+// saveFavoritesInLocalStorage();
+
 }
+
+// make sure that stars stay colored in on favorites page and stories list
 
 
 
@@ -105,9 +128,5 @@ $("#all-stories-list").on("click", ".star", function (evt) {
 
   console.log(userObj);
 
-  const $favoriteMarkup = generateStoryMarkup(clickedStory);
 
-  $(".list-of-favorites").append($favoriteMarkup);
-
-  // saveFavoritesInLocalStorage();
 });
