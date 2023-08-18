@@ -32,13 +32,16 @@ class Story {
    * story instance object with that particular storyId in a array
    */
 
-  static getStoryById(storyId) {
+  static async getStoryById(storyId) {
     //but doesnt work if the storyList gets updated to not include the old story
     //anymore, so how do we check for the old one?
-    const [clickedStory] = storyList.stories.filter(story => story.storyId === storyId);
-    return clickedStory;
+    const response = await fetch(`${BASE_URL}/stories/${storyId}`, {
+      method: "GET",
+    });
 
-    const clickedStory2 = currentUser.favorites.filter(story => story.storyId === storyId)
+    const storyData = await response.json();
+
+    return new Story(storyData.story);
   }
 
 }
@@ -235,6 +238,7 @@ class User {
    */
 
   async addFavorite(story) {
+    console.log("addFavorite story", story);
     this.favorites.push(story);
 
     const response = await fetch(

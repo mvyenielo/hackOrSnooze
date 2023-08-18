@@ -71,3 +71,5 @@ $(start);
 // Do we need to adjust the static method to also check the currentUser.favorites array?!!!!!!!
 // Do we need to use LS to keep track of favorites?
 // Do you not want us to immedietaly remove a favorited story from the favorite list?
+// When we reomve a favorite, should it stay on the list with an empty star or completely
+// be removed after navigating away from favorites page and coming back (like example)

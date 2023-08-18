@@ -21,7 +21,7 @@ async function getAndShowStoriesOnStart() {
 
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
-
+console.log("generateSToryMarkup ", story);
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
@@ -106,9 +106,16 @@ function displayFavorite(story) {
  * the storyId from the LIST OF FAVORITES
  */
 
-function removeFavoriteFromUI(story) {
-  $(".list-of-favorites").find(`#${story.storyId}`).remove();
-}
+// FIXME: removes the story immediately from favorites, don't think we can do that
+// function removeFavoriteFromUI(story) {
+//   $(".list-of-favorites").find(`#${story.storyId}`).remove();
+// }
+
+// function removeFavoriteFromUI(story) {
+//   const storyId = $(evt.target).parent().attr("id");
+
+//   $(".list-of-favorites").remove();
+// }
 
 
 
@@ -136,13 +143,13 @@ $(".stories-container").on("click", ".star", async function (evt) {
 
   const storyId = $(evt.target).parent().attr("id");
 
-  const clickedStory = Story.getStoryById(storyId);
+  const clickedStory = await Story.getStoryById(storyId);
   console.log("storyId is", storyId);
   let userObj;
 
   if ($(evt.target).hasClass("bi-star")) {
     userObj = await currentUser.removeFavorite(clickedStory);
-    removeFavoriteFromUI(clickedStory);
+    // removeFavoriteFromUI(clickedStory);
   } else {
     userObj = await currentUser.addFavorite(clickedStory);
     displayFavorite(clickedStory);
