@@ -123,6 +123,5 @@ function updateUIOnUserLogin() {
   console.debug("updateUIOnUserLogin");
   $(".star").show();
   $allStoriesList.show();
-  putUserFavoritesOnPage();
   updateNavOnLogin();
 }

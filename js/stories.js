@@ -21,11 +21,14 @@ async function getAndShowStoriesOnStart() {
 
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
-console.log("generateSToryMarkup ", story);
+  // console.log("generateSToryMarkup ", story);
   const hostName = story.getHostName();
+
+  const isFavorite = currentUser?.favorites.some(fav => fav.storyId === story.storyId);
+
   return $(`
       <li id="${story.storyId}">
-      <i class="star bi bi-star${currentUser?.favorites.includes(story) ? "-fill": ""}
+      <i class="star bi bi-star${isFavorite ? "-fill" : ""}
         ${currentUser ? "" : "hidden"}"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
@@ -79,6 +82,9 @@ $("#new-story-form").on("submit", function (evt) {
 
 
 function putUserFavoritesOnPage() {
+  $(".list-of-favorites").empty();
+  $("#no-favorites").hide();
+
   const currentUserFavorites = currentUser.favorites;
   if (currentUserFavorites.length === 0) {
     $("#no-favorites").show();
@@ -92,48 +98,14 @@ function putUserFavoritesOnPage() {
 }
 
 
-
 /** displayFavorite: takes in a story instance, creates markup, and appends
  * to the LIST OF FAVORITES
  */
 
-function displayFavorite(story) {
-  const $favoriteMarkup = generateStoryMarkup(story);
-  $(".list-of-favorites").append($favoriteMarkup);
-}
-
-/** removeFavorites: takes in a story instance, and REMOVES the specific story with
- * the storyId from the LIST OF FAVORITES
- */
-
-// FIXME: removes the story immediately from favorites, don't think we can do that
-// function removeFavoriteFromUI(story) {
-//   $(".list-of-favorites").find(`#${story.storyId}`).remove();
+// function displayFavorite(story) {
+//   const $favoriteMarkup = generateStoryMarkup(story);
+//   $(".list-of-favorites").append($favoriteMarkup);
 // }
-
-// function removeFavoriteFromUI(story) {
-//   const storyId = $(evt.target).parent().attr("id");
-
-//   $(".list-of-favorites").remove();
-// }
-
-
-
-async function updateFavorite() {
-
-  // need to check if story is already favorited, add if not
-  // - shouldn't be able to add a story to favorites if it's already favorited
-  // add and remove stories from display on favorites page
-  // make sure the "No favorites yet" message shows when the favorites is empty/
-  // becomes empty
-
-
-  // saveFavoritesInLocalStorage();
-
-}
-
-// make sure that stars stay colored in on favorites page and stories list
-
 
 
 // FAV STAR EVENT LISTENER!
@@ -144,20 +116,10 @@ $(".stories-container").on("click", ".star", async function (evt) {
   const storyId = $(evt.target).parent().attr("id");
 
   const clickedStory = await Story.getStoryById(storyId);
-  console.log("storyId is", storyId);
-  let userObj;
 
   if ($(evt.target).hasClass("bi-star")) {
-    userObj = await currentUser.removeFavorite(clickedStory);
-    // removeFavoriteFromUI(clickedStory);
+    await currentUser.removeFavorite(clickedStory);
   } else {
-    userObj = await currentUser.addFavorite(clickedStory);
-    displayFavorite(clickedStory);
+    await currentUser.addFavorite(clickedStory);
   }
-  //   // if you spam click a story IN the fav tab, it keeps re-adding it
-    // if (!$(evt.target).closest("div").hasClass("favorites-list")) {
-    // }
-
-
-  // console.log(userObj);
 });
