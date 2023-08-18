@@ -80,7 +80,8 @@ $("#new-story-form").on("submit", function (evt) {
 // TODO: fix if statement/get rid of
 function putUserFavoritesOnPage() {
   const currentUserFavorites = currentUser.favorites;
-  if (currentUserFavorites === 0) {
+  if (currentUserFavorites.length === 0) {
+    $("#no-favorites").show();
     return;
   }
 
@@ -91,16 +92,26 @@ function putUserFavoritesOnPage() {
 }
 
 
+
+
+function displayFavorite(story) {
+  const $favoriteMarkup = generateStoryMarkup(story);
+  $(".list-of-favorites").append($favoriteMarkup);
+}
+
+
+
+
 async function updateFavorite() {
 
-// need to check if story is already favorited, add if not
-// - shouldn't be able to add a story to favorites if it's already favorited
-// add and remove stories from display on favorites page
-// make sure the "No favorites yet" message shows when the favorites is empty/
-// becomes empty
+  // need to check if story is already favorited, add if not
+  // - shouldn't be able to add a story to favorites if it's already favorited
+  // add and remove stories from display on favorites page
+  // make sure the "No favorites yet" message shows when the favorites is empty/
+  // becomes empty
 
 
-// saveFavoritesInLocalStorage();
+  // saveFavoritesInLocalStorage();
 
 }
 
@@ -110,7 +121,7 @@ async function updateFavorite() {
 
 // FAV STAR EVENT LISTENER!
 
-$("#all-stories-list").on("click", ".star", function (evt) {
+$(".stories-container").on("click", ".star", async function (evt) {
   $(evt.target).toggleClass("bi-star bi-star-fill");
 
   const storyId = $(evt.target).parent().attr("id");
@@ -120,9 +131,13 @@ $("#all-stories-list").on("click", ".star", function (evt) {
   let userObj;
 
   if ($(evt.target).hasClass("bi-star")) {
-    userObj = currentUser.removeFavorite(clickedStory);
+    userObj = await currentUser.removeFavorite(clickedStory);
   } else {
-    userObj = currentUser.addFavorite(clickedStory);
+    userObj = await currentUser.addFavorite(clickedStory);
+
+    if (!$(evt.target).closest("div").hasClass("favorites-list")) {
+      displayFavorite(clickedStory);
+    }
   }
 
 

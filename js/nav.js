@@ -50,6 +50,8 @@ function navFavoritesClick(evt) {
   evt.preventDefault();
   $("#all-stories-list").hide();
   $("#new-story-form").hide();
+  $("#login-form").hide();
+  $("#signup-form").hide();
   $(".favorites-list").show();
 }
 
