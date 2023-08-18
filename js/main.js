@@ -10,6 +10,8 @@ const $allStoriesList = $("#all-stories-list");
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
 
+const $favoritesList = $(".favorites-list");
+
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
 const $navLogOut = $("#nav-logout");
@@ -24,6 +26,7 @@ function hidePageComponents() {
     $allStoriesList,
     $loginForm,
     $signupForm,
+    $favoritesList,
   ];
   components.forEach(c => c.hide());
 }
@@ -48,3 +51,15 @@ console.warn("HEY STUDENT: This program sends many debug messages to" +
   " seeing those helpful debug messages. In your browser console, click on" +
   " menu 'Default Levels' and add Verbose");
 $(start);
+
+
+
+
+
+
+
+//TODO: append favorites to favorite section
+//TODO: stars and fav stories persistent on refresh and logging in and out
+//TODO: figure out removing fav stories from DOM in fav section
+//TODO: read the hint about older stories
+

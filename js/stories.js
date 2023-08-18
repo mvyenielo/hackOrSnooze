@@ -25,7 +25,7 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
-      <i class="star bi bi-star ${(currentUser)? "":"hidden"}"></i>
+      <i class="star bi bi-star ${currentUser ? "" : "hidden"}"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -92,5 +92,4 @@ $("#all-stories-list").on("click", ".star", function (evt) {
     : currentUser.addFavorite(clickedStory);
 
   saveFavoritesInLocalStorage();
-
 });

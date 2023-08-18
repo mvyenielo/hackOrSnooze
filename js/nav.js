@@ -41,12 +41,16 @@ function updateNavOnLogin() {
 
 function navSubmitClick(evt) {
   evt.preventDefault();
+  $allStoriesList.show();
+  $favoritesList.hide();
   $("#new-story-form").toggle();
 }
 
 function navFavoritesClick(evt) {
   evt.preventDefault();
-  $("#all-stories-list").toggle();
+  $("#all-stories-list").hide();
+  $("#new-story-form").hide();
+  $(".favorites-list").show();
 }
 
 
