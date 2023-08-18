@@ -229,56 +229,51 @@ class User {
       return null;
     }
   }
+  
   /**
    * checkIfFavorite: Takes in a story instance, detrmines if the current user
    * instance has this story on their favorites list, return true if so.
-   *
    */
+
   checkIfFavorite(story) {
-     return this.favorites.some(fav => fav.storyId === story.storyId);
+    return this.favorites.some(fav => fav.storyId === story.storyId);
   }
+
   /** addFavorite: takes in a story instance, pushes to user instance favorites
    * array prop, calls API to POST the new fav story. returns user object with
    * favorite story added
    */
+
   async addFavorite(story) {
+    const favData = this.fetchFavorite(story, "POST");
 
-
-    const response = await fetch(
-      `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
-      {
-        method: "POST",
-        body: JSON.stringify({
-          token: this.loginToken,
-        }),
-        header: {
-          "Content-Type": "application/json"
-        }
-      }
-    );
-    const favoriteAdded = await response.json();
     this.favorites.push(story);
 
-    return favoriteAdded;
+    return favData;
   }
 
   /** removeFavorite: removes story object from this.favorites, then calls API to
    * delete story from server, returns user object with favorite story deleted
    */
-  // TODO: remove story from favorites arr after API call, and use filter
-  // to remove by id
-  async removeFavorite(story) {
-    for (let i = 0; i < this.favorites.length; i++) {
-      if (this.favorites[i].storyId === story.storyId) {
-        this.favorites.splice(i, 1);
-        break;
-      }
-    }
 
+  async removeFavorite(story) {
+    const favData = await this.fetchFavorite(story, "DELETE");
+
+    this.favorites = this.favorites.filter(fav => fav.storyId !== story.storyId);
+
+    return favData;
+  }
+
+
+  /** fetchFavorite: takes in a story instance and an HTTP method, makes API call
+   * to favorites endpoint with provided method and returns the JSON response.
+    */
+
+  async fetchFavorite(story, method) {
     const response = await fetch(
       `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
       {
-        method: "DELETE",
+        method,
         body: JSON.stringify({
           token: this.loginToken,
         }),
@@ -288,9 +283,7 @@ class User {
       }
     );
 
-    // TODO: make api calls in one function,do the rest in add/remove
-
-    const favoriteDeleted = await response.json();
-    return favoriteDeleted;
+    const favData = response.json();
+    return favData;
   }
 }
