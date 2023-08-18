@@ -7,6 +7,7 @@ const $body = $("body");
 const $storiesLoadingMsg = $("#stories-loading-msg");
 const $allStoriesList = $("#all-stories-list");
 const $favoritesList = $(".favorites-list");
+const $myStoriesList = $(".my-stories");
 
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
@@ -28,6 +29,7 @@ function hidePageComponents() {
     $signupForm,
     $submitForm,
     $favoritesList,
+    $myStoriesList,
   ];
   components.forEach(c => c.hide());
 }
@@ -52,5 +54,3 @@ console.warn("HEY STUDENT: This program sends many debug messages to" +
   " seeing those helpful debug messages. In your browser console, click on" +
   " menu 'Default Levels' and add Verbose");
 $(start);
-
-

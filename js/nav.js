@@ -57,6 +57,14 @@ function navFavoritesClick(evt) {
   $favoritesList.show();
 }
 
+function navMyStoriesClick(evt) {
+  evt.preventDefault();
+  hidePageComponents();
+  putMyStoriesOnPage();
+  $myStoriesList.show();
+}
+
 
 $("#nav-new-story").on("click", navSubmitClick);
 $("#nav-favorites").on("click", navFavoritesClick);
+$("#nav-my-stories").on("click", navMyStoriesClick);
