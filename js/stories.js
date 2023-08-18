@@ -22,7 +22,7 @@ async function getAndShowStoriesOnStart() {
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
   const hostName = story.getHostName();
-  const isFavorite = currentUser?.favorites.some(fav => fav.storyId === story.storyId);
+  const isFavorite = currentUser?.checkIfFavorite(story);
 
   return $(`
       <li id="${story.storyId}">
@@ -98,8 +98,14 @@ function putFavoritesOnPage() {
   }
 }
 
+/**
+ * handleStarClick: called when a star is clicked to determine whether the
+ * star needs to be filled or not, and updates the favorite list by removing or
+ * adding favorite
+ *
+ */
 
-$(".stories-container").on("click", ".star", async function (evt) {
+async function handleStarClick(evt) {
   $(evt.target).toggleClass("bi-star bi-star-fill");
 
   const storyId = $(evt.target).parent().attr("id");
@@ -110,4 +116,8 @@ $(".stories-container").on("click", ".star", async function (evt) {
   } else {
     await currentUser.addFavorite(clickedStory);
   }
-});
+}
+
+$(".stories-container").on("click", ".star", handleStarClick);
+
+

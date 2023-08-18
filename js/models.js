@@ -97,9 +97,9 @@ class StoryList {
       headers: { "Content-Type": "application/json" }
     });
 
-    const {story} = await response.json();
+    const { story } = await response.json();
 
-    const newStoryInstance = new Story(story)
+    const newStoryInstance = new Story(story);
 
     this.stories.unshift(newStoryInstance);
 
@@ -229,13 +229,20 @@ class User {
       return null;
     }
   }
-
-  /** addFavorite: takes in a story instance, pushes to user instance favorites
-   * array prop, calls API to POST the new fav story. returns user object
+  /**
+   * checkIfFavorite: Takes in a story instance, detrmines if the current user
+   * instance has this story on their favorites list, return true if so.
+   *
    */
-
+  checkIfFavorite(story) {
+     return this.favorites.some(fav => fav.storyId === story.storyId);
+  }
+  /** addFavorite: takes in a story instance, pushes to user instance favorites
+   * array prop, calls API to POST the new fav story. returns user object with
+   * favorite story added
+   */
   async addFavorite(story) {
-    this.favorites.push(story);
+
 
     const response = await fetch(
       `${BASE_URL}/users/${this.username}/favorites/${story.storyId}`,
@@ -248,15 +255,18 @@ class User {
           "Content-Type": "application/json"
         }
       }
-    )
+    );
     const favoriteAdded = await response.json();
+    this.favorites.push(story);
+
     return favoriteAdded;
   }
 
   /** removeFavorite: removes story object from this.favorites, then calls API to
-   * delete story from server
+   * delete story from server, returns user object with favorite story deleted
    */
-
+  // TODO: remove story from favorites arr after API call, and use filter
+  // to remove by id
   async removeFavorite(story) {
     for (let i = 0; i < this.favorites.length; i++) {
       if (this.favorites[i].storyId === story.storyId) {
@@ -276,7 +286,9 @@ class User {
           "Content-Type": "application/json"
         }
       }
-    )
+    );
+
+    // TODO: make api calls in one function,do the rest in add/remove
 
     const favoriteDeleted = await response.json();
     return favoriteDeleted;

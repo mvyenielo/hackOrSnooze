@@ -46,11 +46,15 @@ function navSubmitClick(evt) {
   $("#new-story-form").toggle();
 }
 
+/** navSubmitClick: When user clicks "favorites" button, show user's favorites
+ * list
+ */
+
 function navFavoritesClick(evt) {
   evt.preventDefault();
   hidePageComponents();
   putFavoritesOnPage();
-  $(".favorites-list").show();
+  $favoritesList.show();
 }
 
 
