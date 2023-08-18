@@ -224,6 +224,7 @@ class User {
   }
 
   async addFavorite(story) {
+
     this.favorites.push(story);
 
     const response = await fetch(

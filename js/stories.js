@@ -25,7 +25,8 @@ function generateStoryMarkup(story) {
   const hostName = story.getHostName();
   return $(`
       <li id="${story.storyId}">
-      <i class="star bi bi-star ${currentUser ? "" : "hidden"}"></i>
+      <i class="star bi bi-star${currentUser?.favorites.includes(story) ? "-fill": ""}
+        ${currentUser ? "" : "hidden"}"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
           ${story.title}
         </a>
@@ -77,7 +78,6 @@ $("#new-story-form").on("submit", function (evt) {
 });
 
 
-// TODO: fix if statement/get rid of
 function putUserFavoritesOnPage() {
   const currentUserFavorites = currentUser.favorites;
   if (currentUserFavorites.length === 0) {
@@ -99,6 +99,9 @@ function displayFavorite(story) {
   $(".list-of-favorites").append($favoriteMarkup);
 }
 
+function removeFavorite(story) {
+  $(".list-of-favorites").remove(`#${story.storyId}`);
+}
 
 
 
@@ -125,13 +128,14 @@ $(".stories-container").on("click", ".star", async function (evt) {
   $(evt.target).toggleClass("bi-star bi-star-fill");
 
   const storyId = $(evt.target).parent().attr("id");
-
+  console.log(storyId);
   const clickedStory = Story.getStoryById(storyId);
 
   let userObj;
 
   if ($(evt.target).hasClass("bi-star")) {
     userObj = await currentUser.removeFavorite(clickedStory);
+    removeFavorite(clickedStory);
   } else {
     userObj = await currentUser.addFavorite(clickedStory);
 
