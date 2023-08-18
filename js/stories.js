@@ -79,6 +79,12 @@ $("#new-story-form").on("submit", function (evt) {
 
 
 
+async function updateFavorite() {
+
+}
+
+
+
 // FAV STAR EVENT LISTENER!
 
 $("#all-stories-list").on("click", ".star", function (evt) {
@@ -88,8 +94,20 @@ $("#all-stories-list").on("click", ".star", function (evt) {
 
   const clickedStory = Story.getStoryById(storyId);
 
-  $(evt.target).hasClass("bi-star") ? currentUser.removeFavorite(clickedStory)
-    : currentUser.addFavorite(clickedStory);
+  let userObj;
 
-  saveFavoritesInLocalStorage();
+  if ($(evt.target).hasClass("bi-star")) {
+    userObj = currentUser.removeFavorite(clickedStory);
+  } else {
+    userObj = currentUser.addFavorite(clickedStory);
+  }
+
+
+  console.log(userObj);
+
+  const $favoriteMarkup = generateStoryMarkup(clickedStory);
+
+  $(".list-of-favorites").append($favoriteMarkup);
+
+  // saveFavoritesInLocalStorage();
 });
