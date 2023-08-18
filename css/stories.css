@@ -37,3 +37,10 @@
 .story-user {
   display: block;
 }
+
+/* Favorite stories */
+
+
+.list-of-favorites > li {
+  list-style: none;
+}
