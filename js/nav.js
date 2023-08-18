@@ -48,10 +48,7 @@ function navSubmitClick(evt) {
 
 function navFavoritesClick(evt) {
   evt.preventDefault();
-  $("#all-stories-list").hide();
-  $("#new-story-form").hide();
-  $("#login-form").hide();
-  $("#signup-form").hide();
+  hidePageComponents();
   $(".favorites-list").show();
 }
 
