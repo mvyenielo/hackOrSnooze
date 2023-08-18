@@ -49,7 +49,7 @@ function navSubmitClick(evt) {
 function navFavoritesClick(evt) {
   evt.preventDefault();
   hidePageComponents();
-  putUserFavoritesOnPage();
+  putFavoritesOnPage();
   $(".favorites-list").show();
 }
 

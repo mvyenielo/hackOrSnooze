@@ -21,9 +21,7 @@ async function getAndShowStoriesOnStart() {
 
 function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
-  // console.log("generateSToryMarkup ", story);
   const hostName = story.getHostName();
-
   const isFavorite = currentUser?.favorites.some(fav => fav.storyId === story.storyId);
 
   return $(`
@@ -76,12 +74,15 @@ async function getFormDataAndDisplayStory() {
 $("#new-story-form").on("submit", function (evt) {
   evt.preventDefault();
   getFormDataAndDisplayStory();
-
   $("#new-story-submit").trigger("reset");
 });
 
 
-function putUserFavoritesOnPage() {
+/**putFavoritesOnPage: clears the ul of favorites, checks if currentUser has favorites,
+ * if they do, generate markup for each and append to the favorites list
+ */
+
+function putFavoritesOnPage() {
   $(".list-of-favorites").empty();
   $("#no-favorites").hide();
 
@@ -98,23 +99,10 @@ function putUserFavoritesOnPage() {
 }
 
 
-/** displayFavorite: takes in a story instance, creates markup, and appends
- * to the LIST OF FAVORITES
- */
-
-// function displayFavorite(story) {
-//   const $favoriteMarkup = generateStoryMarkup(story);
-//   $(".list-of-favorites").append($favoriteMarkup);
-// }
-
-
-// FAV STAR EVENT LISTENER!
-
 $(".stories-container").on("click", ".star", async function (evt) {
   $(evt.target).toggleClass("bi-star bi-star-fill");
 
   const storyId = $(evt.target).parent().attr("id");
-
   const clickedStory = await Story.getStoryById(storyId);
 
   if ($(evt.target).hasClass("bi-star")) {

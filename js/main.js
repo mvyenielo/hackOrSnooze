@@ -6,12 +6,11 @@ const $body = $("body");
 
 const $storiesLoadingMsg = $("#stories-loading-msg");
 const $allStoriesList = $("#all-stories-list");
+const $favoritesList = $(".favorites-list");
 
 const $loginForm = $("#login-form");
 const $signupForm = $("#signup-form");
 const $submitForm = $("#new-story-form");
-
-const $favoritesList = $(".favorites-list");
 
 const $navLogin = $("#nav-login");
 const $navUserProfile = $("#nav-user-profile");
@@ -55,21 +54,3 @@ console.warn("HEY STUDENT: This program sends many debug messages to" +
 $(start);
 
 
-
-
-
-
-
-
-//TODO: stars persistent ON THE MAIN PAGE on refresh and logging in/out
-//TODO: figure out removing fav stories from DOM in fav section
-//TODO: read the hint about older stories
-
-
-
-// QUESTIONS TO ASK: //
-// Do we need to adjust the static method to also check the currentUser.favorites array?!!!!!!!
-// Do we need to use LS to keep track of favorites?
-// Do you not want us to immedietaly remove a favorited story from the favorite list?
-// When we reomve a favorite, should it stay on the list with an empty star or completely
-// be removed after navigating away from favorites page and coming back (like example)

@@ -28,13 +28,11 @@ class Story {
     return url.hostname;
   }
 
-  /** getStoryById: loops over the global storyList.stories array and finds the
-   * story instance object with that particular storyId in a array
+  /** getStoryById: calls API to get a specific story from the input storyId
+   * Returns a new story instance of that storyData object
    */
 
   static async getStoryById(storyId) {
-    //but doesnt work if the storyList gets updated to not include the old story
-    //anymore, so how do we check for the old one?
     const response = await fetch(`${BASE_URL}/stories/${storyId}`, {
       method: "GET",
     });
@@ -43,7 +41,6 @@ class Story {
 
     return new Story(storyData.story);
   }
-
 }
 
 
@@ -238,7 +235,6 @@ class User {
    */
 
   async addFavorite(story) {
-    console.log("addFavorite story", story);
     this.favorites.push(story);
 
     const response = await fetch(
@@ -256,6 +252,10 @@ class User {
     const favoriteAdded = await response.json();
     return favoriteAdded;
   }
+
+  /** removeFavorite: removes story object from this.favorites, then calls API to
+   * delete story from server
+   */
 
   async removeFavorite(story) {
     for (let i = 0; i < this.favorites.length; i++) {
