@@ -73,9 +73,9 @@ async function getFormDataAndDisplayStory() {
   $allStoriesList.prepend($storyMarkup);
 }
 
-$("#new-story-form").on("submit", function (evt) {
+$("#new-story-form").on("submit", async function (evt) {
   evt.preventDefault();
-  getFormDataAndDisplayStory();
+  await getFormDataAndDisplayStory();
   $("#new-story-submit").trigger("reset");
 });
 
