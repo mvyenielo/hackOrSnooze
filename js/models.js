@@ -229,7 +229,7 @@ class User {
       return null;
     }
   }
-  
+
   /**
    * checkIfFavorite: Takes in a story instance, detrmines if the current user
    * instance has this story on their favorites list, return true if so.
@@ -237,6 +237,11 @@ class User {
 
   checkIfFavorite(story) {
     return this.favorites.some(fav => fav.storyId === story.storyId);
+  }
+
+
+  checkIfOwnStory(story) {
+    return this.ownStories.some(ownStory => ownStory.storyId === story.storyId);
   }
 
   /** addFavorite: takes in a story instance, pushes to user instance favorites
@@ -285,5 +290,20 @@ class User {
 
     const favData = response.json();
     return favData;
+  }
+
+  async removeOwnStory(story) {
+    const response = await fetch(`${BASE_URL}/stories/${story.storyId}`, {
+      method: "DELETE",
+      body: JSON.stringify({ token: this.loginToken }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    });
+
+    this.ownStories = this.ownStories.filter(ownS => ownS.storyId !== story.storyId);
+
+    const data = response.json();
+    return data;
   }
 }

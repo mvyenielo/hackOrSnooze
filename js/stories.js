@@ -23,9 +23,11 @@ function generateStoryMarkup(story) {
   // console.debug("generateStoryMarkup", story);
   const hostName = story.getHostName();
   const isFavorite = currentUser?.checkIfFavorite(story);
+  const isOwnStory = currentUser?.checkIfOwnStory(story);
 
   return $(`
       <li id="${story.storyId}">
+      ${isOwnStory ? '<i class="trash bi bi-trash"></i>' : ""}
       <i class="star bi bi-star${isFavorite ? "-fill" : ""}
         ${currentUser ? "" : "hidden"}"></i>
         <a href="${story.url}" target="a_blank" class="story-link">
@@ -135,4 +137,12 @@ async function handleStarClick(evt) {
   }
 }
 
+async function handleTrashClick(evt) {
+  const storyId = $(evt.target).parent().attr("id");
+  const clickedStory = await Story.getStoryById(storyId);
+
+  currentUser.removeOwnStory(clickedStory);
+}
+
 $(".stories-container").on("click", ".star", handleStarClick);
+$(".stories-container").on("click", ".trash", handleTrashClick);
