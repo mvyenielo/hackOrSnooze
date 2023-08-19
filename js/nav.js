@@ -41,8 +41,8 @@ function updateNavOnLogin() {
 
 function navSubmitClick(evt) {
   evt.preventDefault();
+  hidePageComponents();
   $allStoriesList.show();
-  $favoritesList.hide();
   $("#new-story-form").toggle();
 }
 
