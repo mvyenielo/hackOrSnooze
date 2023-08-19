@@ -102,6 +102,7 @@ class StoryList {
     const newStoryInstance = new Story(story);
 
     this.stories.unshift(newStoryInstance);
+    currentUser.ownStories.unshift(newStoryInstance);
 
     return newStoryInstance;
   }
@@ -302,8 +303,9 @@ class User {
     });
 
     this.ownStories = this.ownStories.filter(ownS => ownS.storyId !== story.storyId);
-
+    storyList.stories = storyList.stories.filter(ownS => ownS.storyId !== story.storyId);
     const data = response.json();
+
     return data;
   }
 }

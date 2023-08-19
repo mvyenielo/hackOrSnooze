@@ -117,6 +117,7 @@ function putMyStoriesOnPage() {
 }
 
 
+
 /**
  * handleStarClick: called when a star is clicked to determine whether the
  * star needs to be filled or not, and updates the favorite list by removing or
@@ -140,8 +141,14 @@ async function handleStarClick(evt) {
 async function handleTrashClick(evt) {
   const storyId = $(evt.target).parent().attr("id");
   const clickedStory = await Story.getStoryById(storyId);
+  $(evt.target).parent().remove();
 
-  currentUser.removeOwnStory(clickedStory);
+  await currentUser.removeOwnStory(clickedStory);
+
+  if (currentUser.ownStories.length === 0) {
+    $("#no-my-stories").show();
+  }
+
 }
 
 $(".stories-container").on("click", ".star", handleStarClick);
